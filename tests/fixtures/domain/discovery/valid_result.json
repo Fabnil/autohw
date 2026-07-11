@@ -1,0 +1,19 @@
+{
+  "summary": "Discovery summary for the course materials.",
+  "references": [
+    {
+      "path": "__REFERENCE_A__",
+      "summary": "Core course instructions.",
+      "location": "entire file"
+    },
+    {
+      "path": "__REFERENCE_B__",
+      "summary": "Primary formulas and notation reference.",
+      "location": "pages 1-3"
+    }
+  ],
+  "findings": [
+    "Most assignments rely on the formulas reference.",
+    "The README defines the expected project layout."
+  ]
+}
