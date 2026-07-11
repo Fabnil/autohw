@@ -1,0 +1,14 @@
+{
+  "summary": "Discovery summary for the course materials.",
+  "references": [
+    {
+      "path": "__REFERENCE_A__",
+      "summary": "Core course instructions."
+    },
+    {
+      "path": 123,
+      "summary": "Broken reference"
+    }
+  ],
+  "findings": []
+}
