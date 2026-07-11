@@ -10,6 +10,8 @@ from study_agent.domain.course import CourseContext
 FIXTURES_DIR = Path(__file__).resolve().parents[1] / "fixtures"
 COURSE_FIXTURES_DIR = FIXTURES_DIR / "domain" / "course"
 FILES_FIXTURES_DIR = FIXTURES_DIR / "files"
+COURSE_ID = "linear-algebra"
+COURSE_TITLE = "Linear Algebra"
 
 
 def _render_course_fixture(
@@ -36,9 +38,15 @@ def test_course_context_from_json_parses_valid_manifest(tmp_path: Path) -> None:
         "valid_context.json",
     )
 
-    context = CourseContext.from_json(context_json_path=context_json_path)
+    context = CourseContext.from_json(
+        id=COURSE_ID,
+        title=COURSE_TITLE,
+        context_json_path=context_json_path,
+    )
 
     assert context == CourseContext(
+        id=COURSE_ID,
+        title=COURSE_TITLE,
         description="Course overview and important conventions.",
         references=(
             ContextReference(
@@ -61,9 +69,15 @@ def test_course_context_from_json_allows_empty_references(tmp_path: Path) -> Non
         "empty_references.json",
     )
 
-    context = CourseContext.from_json(context_json_path=context_json_path)
+    context = CourseContext.from_json(
+        id=COURSE_ID,
+        title=COURSE_TITLE,
+        context_json_path=context_json_path,
+    )
 
     assert context == CourseContext(
+        id=COURSE_ID,
+        title=COURSE_TITLE,
         description="Course overview without curated references yet.",
         references=(),
     )
@@ -75,6 +89,8 @@ def test_course_context_rejects_non_tuple_references() -> None:
         match=r"CourseContext.references must be a tuple",
     ):
         CourseContext(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
             description="Course overview and important conventions.",
             references=[],  # type: ignore[arg-type]
         )
@@ -86,8 +102,36 @@ def test_course_context_rejects_non_context_reference_item() -> None:
         match=r"CourseContext.references\[0\] must be a ContextReference",
     ):
         CourseContext(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
             description="Course overview and important conventions.",
             references=("not-a-reference",),  # type: ignore[arg-type]
+        )
+
+
+def test_course_context_rejects_empty_id() -> None:
+    with pytest.raises(
+        ValueError,
+        match=r"CourseContext.id must not be empty",
+    ):
+        CourseContext(
+            id="  ",
+            title=COURSE_TITLE,
+            description="Course overview and important conventions.",
+            references=(),
+        )
+
+
+def test_course_context_rejects_empty_title() -> None:
+    with pytest.raises(
+        ValueError,
+        match=r"CourseContext.title must not be empty",
+    ):
+        CourseContext(
+            id=COURSE_ID,
+            title="",
+            description="Course overview and important conventions.",
+            references=(),
         )
 
 
@@ -101,7 +145,11 @@ def test_course_context_from_json_rejects_unknown_root_field(tmp_path: Path) -> 
         ValueError,
         match=r"CourseContext contains unknown fields: \['extra'\]",
     ):
-        CourseContext.from_json(context_json_path=context_json_path)
+        CourseContext.from_json(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
+            context_json_path=context_json_path,
+        )
 
 
 def test_course_context_from_json_rejects_non_string_description(tmp_path: Path) -> None:
@@ -114,7 +162,11 @@ def test_course_context_from_json_rejects_non_string_description(tmp_path: Path)
         ValueError,
         match=r"CourseContext.description must be a string",
     ):
-        CourseContext.from_json(context_json_path=context_json_path)
+        CourseContext.from_json(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
+            context_json_path=context_json_path,
+        )
 
 
 def test_course_context_from_json_wraps_invalid_reference_error_with_index(
@@ -132,7 +184,11 @@ def test_course_context_from_json_wraps_invalid_reference_error_with_index(
             r"ContextReference.path must be a string"
         ),
     ):
-        CourseContext.from_json(context_json_path=context_json_path)
+        CourseContext.from_json(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
+            context_json_path=context_json_path,
+        )
 
 
 def test_course_context_from_json_rejects_duplicate_reference_paths(tmp_path: Path) -> None:
@@ -145,7 +201,11 @@ def test_course_context_from_json_rejects_duplicate_reference_paths(tmp_path: Pa
         ValueError,
         match=r"CourseContext.references must not contain duplicate paths",
     ):
-        CourseContext.from_json(context_json_path=context_json_path)
+        CourseContext.from_json(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
+            context_json_path=context_json_path,
+        )
 
 
 def test_course_context_from_json_rejects_malformed_json(tmp_path: Path) -> None:
@@ -158,7 +218,11 @@ def test_course_context_from_json_rejects_malformed_json(tmp_path: Path) -> None
         ValueError,
         match=rf"Invalid JSON in {context_json_path}: line \d+, column \d+: .*",
     ):
-        CourseContext.from_json(context_json_path=context_json_path)
+        CourseContext.from_json(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
+            context_json_path=context_json_path,
+        )
 
 
 def test_course_context_from_json_rejects_invalid_utf8(tmp_path: Path) -> None:
@@ -169,4 +233,8 @@ def test_course_context_from_json_rejects_invalid_utf8(tmp_path: Path) -> None:
         ValueError,
         match=rf"Invalid UTF-8 in course context JSON: {context_json_path}",
     ):
-        CourseContext.from_json(context_json_path=context_json_path)
+        CourseContext.from_json(
+            id=COURSE_ID,
+            title=COURSE_TITLE,
+            context_json_path=context_json_path,
+        )

@@ -27,6 +27,14 @@ class CourseContext:
 
     def __post_init__(self) -> None:
         _validate_non_empty_string(
+            self.id,
+            field_name="CourseContext.id",
+        )
+        _validate_non_empty_string(
+            self.title,
+            field_name="CourseContext.title",
+        )
+        _validate_non_empty_string(
             self.description,
             field_name="CourseContext.description",
         )
@@ -46,6 +54,8 @@ class CourseContext:
     def from_json(
         cls,
         *,
+        id: str,
+        title: str,
         context_json_path: Path,
     ) -> CourseContext:
         _validate_absolute_file_path(
@@ -105,6 +115,8 @@ class CourseContext:
                 ) from error
 
         return cls(
+            id=id,
+            title=title,
             description=raw_description,
             references=tuple(references),
         )
