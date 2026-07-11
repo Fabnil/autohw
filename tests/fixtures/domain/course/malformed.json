@@ -1,3 +1,6 @@
 {
+  "id": "linear-algebra",
+  "title": "Linear Algebra",
   "description": "Course overview and important conventions.",
+  "course_root": "__COURSE_ROOT__",
   "references": []

@@ -3,12 +3,21 @@ from __future__ import annotations
 from pathlib import Path
 
 
-def validate_absolute_file_path(path: Path, *, field_name: str) -> None:
-    if not isinstance(path, Path):
-        raise ValueError(f"{field_name} must be a pathlib.Path, got {type(path).__name__}")
-
+def validate_absolute_existing_file_path(path: Path) -> Path:
     if not path.is_absolute():
-        raise ValueError(f"{field_name} must be an absolute path: {path}")
+        raise ValueError("path must be absolute")
 
     if not path.is_file():
-        raise ValueError(f"{field_name} must point to an existing file: {path}")
+        raise ValueError("path must point to an existing file")
+
+    return path
+
+
+def validate_absolute_existing_directory_path(path: Path) -> Path:
+    if not path.is_absolute():
+        raise ValueError("path must be absolute")
+
+    if not path.is_dir():
+        raise ValueError("path must point to an existing directory")
+
+    return path

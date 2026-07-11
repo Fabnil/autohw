@@ -8,7 +8,10 @@ version = "0.1.0"
 description = "Codex-based homework automation pipeline."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "pathspec>=0.12,<1",
+    "pydantic>=2,<3",
+]
 
 [project.scripts]
 study-agent = "study_agent.cli.main:run"

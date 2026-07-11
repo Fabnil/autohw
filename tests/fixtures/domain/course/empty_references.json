@@ -1,4 +1,7 @@
 {
+  "id": "linear-algebra",
+  "title": "Linear Algebra",
   "description": "Course overview without curated references yet.",
+  "course_root": "__COURSE_ROOT__",
   "references": []
 }

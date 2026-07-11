@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 
-def validate_non_empty_string(value: str, *, field_name: str) -> None:
-    if not isinstance(value, str):
-        raise ValueError(f"{field_name} must be a string, got {type(value).__name__}")
+def validate_non_empty_trimmed_string(value: str) -> str:
+    stripped_value = value.strip()
+    if not stripped_value:
+        raise ValueError("must not be empty")
 
-    if not value.strip():
-        raise ValueError(f"{field_name} must not be empty")
+    return stripped_value
