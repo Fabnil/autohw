@@ -1,1 +1,1 @@
-"""Shared utilities used across the project."""
+"""Shared helpers."""

@@ -1,1 +1,1 @@
-"""Validation helpers shared across packages."""
+"""Small reusable validation primitives."""
