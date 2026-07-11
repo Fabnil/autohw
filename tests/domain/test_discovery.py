@@ -4,7 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from study_agent.domain.discovery import ContextReference, DiscoveryFilesResult
+from study_agent.domain.context_reference import ContextReference
+from study_agent.domain.discovery import DiscoveryFilesResult
 
 FIXTURES_DIR = Path(__file__).resolve().parents[1] / "fixtures"
 DISCOVERY_FIXTURES_DIR = FIXTURES_DIR / "domain" / "discovery"

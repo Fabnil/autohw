@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
+from study_agent.domain.context_reference import ContextReference
 from study_agent.domain.course import CourseContext
-from study_agent.domain.discovery import ContextReference
 
 FIXTURES_DIR = Path(__file__).resolve().parents[1] / "fixtures"
 COURSE_FIXTURES_DIR = FIXTURES_DIR / "domain" / "course"

@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
+from study_agent.domain.context_reference import ContextReference
 from study_agent.domain.course import CourseContext
-from study_agent.domain.discovery import ContextReference
 
 
 def test_course_context_from_json_parses_valid_manifest(tmp_path: Path) -> None:

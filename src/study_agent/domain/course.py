@@ -15,7 +15,7 @@ from common.validation.json_data import (
 )
 from common.validation.paths import validate_absolute_file_path as _validate_absolute_file_path
 from common.validation.strings import validate_non_empty_string as _validate_non_empty_string
-from study_agent.domain.discovery import ContextReference
+from study_agent.domain.context_reference import ContextReference
 
 
 @dataclass(frozen=True, slots=True)
