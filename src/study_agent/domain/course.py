@@ -20,6 +20,8 @@ from study_agent.domain.context_reference import ContextReference
 
 @dataclass(frozen=True, slots=True)
 class CourseContext:
+    id: str
+    title: str
     description: str
     references: tuple[ContextReference, ...]
 
@@ -34,9 +36,7 @@ class CourseContext:
 
         for index, reference in enumerate(self.references):
             if not isinstance(reference, ContextReference):
-                raise ValueError(
-                    f"CourseContext.references[{index}] must be a ContextReference"
-                )
+                raise ValueError(f"CourseContext.references[{index}] must be a ContextReference")
 
         reference_paths = [reference.path for reference in self.references]
         if len(reference_paths) != len(set(reference_paths)):
