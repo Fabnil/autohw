@@ -24,7 +24,7 @@ dev = [
 package = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/study_agent"]
+packages = ["src/common", "src/study_agent"]
 
 [tool.pytest.ini_options]
 addopts = "-ra"
