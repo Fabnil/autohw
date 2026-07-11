@@ -7,7 +7,10 @@ from typing import Annotated
 from pydantic import AfterValidator, ConfigDict
 from pydantic_core import PydanticCustomError
 
-from common.validation.paths import validate_absolute_existing_file_path
+from common.validation.paths import (
+    validate_absolute_existing_directory_path,
+    validate_absolute_existing_file_path,
+)
 from common.validation.strings import validate_non_empty_trimmed_string
 
 MODEL_CONFIG = ConfigDict(
@@ -42,6 +45,22 @@ def _validate_absolute_existing_file_path(path: Path) -> Path:
         ) from error
 
 
+def _validate_absolute_existing_directory_path(path: Path) -> Path:
+    try:
+        return validate_absolute_existing_directory_path(path)
+    except ValueError as error:
+        error_message = str(error)
+        error_type = (
+            "path_not_absolute"
+            if error_message.startswith("path must be absolute")
+            else "path_not_directory"
+        )
+        raise PydanticCustomError(
+            error_type,
+            error_message,
+        ) from error
+
+
 def ensure_unique_paths(paths: Iterable[Path], *, field_name: str) -> None:
     normalized_paths = tuple(paths)
     if len(normalized_paths) != len(set(normalized_paths)):
@@ -59,4 +78,9 @@ NonEmptyTrimmedStr = Annotated[
 AbsoluteExistingFilePath = Annotated[
     Path,
     AfterValidator(_validate_absolute_existing_file_path),
+]
+
+AbsoluteExistingDirectoryPath = Annotated[
+    Path,
+    AfterValidator(_validate_absolute_existing_directory_path),
 ]

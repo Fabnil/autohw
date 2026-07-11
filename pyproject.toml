@@ -9,6 +9,7 @@ description = "Codex-based homework automation pipeline."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "pathspec>=0.12,<1",
     "pydantic>=2,<3",
 ]
 
